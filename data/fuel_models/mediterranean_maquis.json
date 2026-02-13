@@ -1,0 +1,47 @@
+{
+  "fuel_type": "mediterranean_maquis",
+  "common_name": "Mediterranean Shrubland",
+  "description": "Dense shrub formation, high fuel continuity",
+  "critical_thresholds": {
+    "lfm": 80.0,
+    "dfm": 7.0,
+    "cbd": 0.25,
+    "vpd": 23.0,
+    "dc": 350.0
+  },
+  "fuel_load_range": [25.0, 70.0],
+  "fuel_depth_range": [0.8, 3.0],
+  "rothermel_coefficients": {
+    "net_fuel_load": 4.0,
+    "surface_area_volume_ratio": 4000.0,
+    "fuel_bed_depth": 1.5,
+    "moisture_of_extinction": 0.20,
+    "heat_content": 18800.0,
+    "ovendry_density": 490.0,
+    "particle_density": 1540.0
+  },
+  "rsi_weights": {
+    "lfm": 0.22,
+    "dfm": 0.16,
+    "cbd": 0.10,
+    "sfl": 0.08,
+    "fbd": 0.06,
+    "wind": 0.16,
+    "vpd": 0.09,
+    "aspect": 0.07,
+    "dc": 0.06
+  },
+  "calibration_coefficients": {
+    "beta_0": -5.01,
+    "beta_1": 0.13,
+    "beta_2": -0.0009,
+    "beta_3": 0.38
+  },
+  "validation": {
+    "cases": 53,
+    "pod": 0.84,
+    "far": 0.15,
+    "csi": 0.72,
+    "auc": 0.87
+  }
+}

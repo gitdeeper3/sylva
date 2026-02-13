@@ -1,0 +1,223 @@
+{
+  "metadata": {
+    "model": "SYLVA v2.5",
+    "doi": "10.5281/zenodo.18627186",
+    "date": "2026-02-13",
+    "timestamp": "2026-02-13T07:57:12.047099",
+    "region": "Attica, Greece"
+  },
+  "summary": {
+    "risk": {
+      "score": 83,
+      "level": "EXTREME",
+      "color": "\u26ab",
+      "description": "Type 1 Incident Complexity - Catastrophic fire behavior"
+    },
+    "confidence": {
+      "level": "HIGH",
+      "uncertainty_range": "Model-based deterministic"
+    },
+    "valid_period": "Next 120 minutes",
+    "key_findings": [
+      "DFM: 5.1% - Critical drought",
+      "Wind: 10.4 m/s - Strong/Extreme",
+      "VPD: 46.7 hPa - Extreme drying",
+      "DC: 487 - Severe drought"
+    ],
+    "critical_parameters": [
+      {
+        "parameter": "DFM",
+        "value": "5.1%",
+        "threshold": "Critical (<8%)",
+        "normalized": "1.00"
+      },
+      {
+        "parameter": "WIND",
+        "value": "10.4 m/s",
+        "threshold": "Critical (>8 m/s)",
+        "normalized": "1.00"
+      },
+      {
+        "parameter": "VPD",
+        "value": "46.7 hPa",
+        "threshold": "Critical (>25 hPa)",
+        "normalized": "1.00"
+      },
+      {
+        "parameter": "DC",
+        "value": "487",
+        "threshold": "Critical (>400)",
+        "normalized": "1.00"
+      }
+    ],
+    "seasonal_context": "DC 487 - 95th percentile (Very severe drought)"
+  },
+  "forecasts": {
+    "pinus_halepensis": {
+      "probability": "76.2%",
+      "ros": "33.9 m/min",
+      "lead_time": "90 min",
+      "hazard_level": "WARNING"
+    },
+    "quercus_ilex": {
+      "probability": "75.6%",
+      "ros": "27.6 m/min",
+      "lead_time": "90 min",
+      "hazard_level": "WARNING"
+    },
+    "mediterranean_maquis": {
+      "probability": "79.2%",
+      "ros": "38.9 m/min",
+      "lead_time": "90 min",
+      "hazard_level": "WARNING"
+    },
+    "dry_grassland": {
+      "probability": "78.4%",
+      "ros": "47.7 m/min",
+      "lead_time": "90 min",
+      "hazard_level": "WARNING"
+    }
+  },
+  "operational_intelligence": {
+    "escalation_trend": {
+      "overall_trend": "\ud83d\udfe0 ESCALATING",
+      "wind": {
+        "icon": "\u2191",
+        "trend": "INCREASING",
+        "delta": 1.5
+      },
+      "vpd": {
+        "icon": "\u2191",
+        "trend": "DRYING",
+        "delta": 4.4
+      },
+      "dfm": {
+        "icon": "\u2193",
+        "trend": "DRYING",
+        "delta": 0.3
+      }
+    },
+    "spread_projection": {
+      "by_fuel_type": {
+        "dry_grassland": "4.3 km",
+        "mediterranean_maquis": "3.5 km",
+        "pinus_halepensis": "3.1 km",
+        "quercus_ilex": "2.5 km"
+      },
+      "max_distance_km": 4.3,
+      "max_ros_fuel": "Dry Grassland",
+      "max_ros_value": 47.7,
+      "methodology": "Based on max ROS (47.7 m/min) from Dry Grassland",
+      "evacuation_buffer_km": 6.4,
+      "threat_zone_ha": 363.1,
+      "threat_zone_methodology": "Elliptical fire growth (head fire dominant, width/length = 0.25)",
+      "wui_arrival": {
+        "minutes": 31,
+        "fuel_type": "Dry Grassland",
+        "estimated_arrival": "08:28"
+      },
+      "arrival_times": [
+        {
+          "distance_km": 1,
+          "eta": "08:18",
+          "minutes": 21
+        },
+        {
+          "distance_km": 2,
+          "eta": "08:39",
+          "minutes": 42
+        },
+        {
+          "distance_km": 5,
+          "eta": "09:42",
+          "minutes": 105
+        }
+      ],
+      "driver_ranking": {
+        "DFM": "100%",
+        "VPD": "100%",
+        "DC": "97%",
+        "Wind": "86%",
+        "LFM": "80%"
+      },
+      "alignment_category": "PERFECT - Maximum spread potential"
+    },
+    "containment_assessment": {
+      "difficulty": "\ud83d\udd34 VERY DIFFICULT",
+      "score": 0.77,
+      "initial_attack": "NOT FEASIBLE",
+      "optimal_window": "< 30 minutes after ignition",
+      "estimated_containment_hours": 6.0,
+      "success_probability": "30%"
+    },
+    "crown_fire_assessment": {
+      "probability": "95%",
+      "status": "Crown fire potential: 95%",
+      "category": "VERY HIGH",
+      "spotting": "VERY HIGH - Long distance spotting (>1.5 km)"
+    },
+    "wui_assessment": {
+      "threat_level": "HIGH",
+      "color": "\ud83d\udd34",
+      "distance_km": 1.5,
+      "estimated_arrival_min": 31,
+      "estimated_arrival_time": "08:28",
+      "evacuation_decision": "IMMEDIATE EVACUATION"
+    }
+  },
+  "analysis": {
+    "driver_ranking": {
+      "DFM": "100%",
+      "VPD": "100%",
+      "DC": "97%",
+      "Wind": "86%",
+      "LFM": "80%"
+    },
+    "resource_requirements": {
+      "hand_crews": 22,
+      "fire_engines": 11,
+      "air_tankers": 3,
+      "helicopters": 3,
+      "dozers": 2,
+      "overhead": "Type 1",
+      "estimated_cost_usd": 675000
+    },
+    "estimated_24h_cost": "$675,000"
+  },
+  "recommendations": {
+    "action_level": "\u26ab EXTREME - Type 1 Incident Complexity - Catastrophic fire behavior",
+    "actions": [
+      "IMMEDIATE EVACUATION - WUI arrival in 31 minutes",
+      "ACTIVATE Type 1 Incident Management Team",
+      "CONTAINMENT: NOT FEASIBLE - structure protection only",
+      "SPREAD: 4.3km in 90min (max from Dry Grassland)",
+      "RESOURCES: 22 crews, 3 air tankers",
+      "ESTIMATED COST: $675,000/24h"
+    ],
+    "public_message": "CRITICAL: Extreme fire danger. WUI arrival in <30 minutes. Evacuate immediately."
+  },
+  "alerts": [
+    {
+      "level": "CRITICAL",
+      "priority": 1,
+      "message": "RISK: EXTREME - WUI arrival in 31min"
+    },
+    {
+      "level": "CRITICAL",
+      "priority": 1,
+      "message": "CROWN FIRE: 95% potential - VERY HIGH - Long distance spotting (>1.5 km)"
+    },
+    {
+      "level": "CRITICAL",
+      "priority": 1,
+      "message": "CONTAINMENT: VERY DIFFICULT - NOT FEASIBLE"
+    }
+  ],
+  "model_limitations": [
+    "Assumes homogeneous fuel bed continuity",
+    "Does not include suppression effects on fire behavior",
+    "No stochastic modeling of spotting ignition",
+    "Wind field assumes steady-state conditions",
+    "Fuel moisture based on equilibrium assumptions"
+  ]
+}

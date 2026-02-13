@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "model": "SYLVA v1.0.0",
+    "doi": "10.5281/zenodo.18627186",
+    "date": "2026-02-13",
+    "timestamp": "2026-02-13T05:31:24",
+    "region": "Mediterranean Basin",
+    "forecaster": "SYLVA Operational System",
+    "version": "1.0.0"
+  },
+  "summary": {
+    "risk_level": "EXTREME",
+    "confidence": "High",
+    "valid_period": "Next 120 minutes",
+    "key_findings": [
+      "Dead fuel moisture critically low (<8%)",
+      "Strong winds (>8 m/s) favoring rapid spread",
+      "Live fuel moisture below critical threshold",
+      "High VPD indicating extreme drying potential",
+      "Extreme drought conditions"
+    ],
+    "critical_parameters": [
+      {
+        "parameter": "DFM",
+        "normalized_value": 0.92,
+        "threshold": "Critical"
+      },
+      {
+        "parameter": "WIND",
+        "normalized_value": 0.89,
+        "threshold": "Critical"
+      }
+    ]
+  },
+  "alerts": {
+    "active_alerts": [
+      {
+        "level": "IMMINENT",
+        "fuel_type": "dry_grassland",
+        "probability": "89.2%",
+        "lead_time": 60,
+        "message": "Rapid fire spread imminent in dry_grassland fuels"
+      },
+      {
+        "level": "WARNING",
+        "fuel_type": "pinus_halepensis",
+        "probability": "79.8%",
+        "lead_time": 90,
+        "message": "Rapid fire spread warning for pinus_halepensis"
+      }
+    ],
+    "total_alerts": 2,
+    "highest_level": "IMMINENT",
+    "timestamp": "2026-02-13T05:31:24"
+  },
+  "recommendations": {
+    "action_level": "IMMINENT ACTION REQUIRED",
+    "actions": [
+      "Execute evacuation orders immediately",
+      "Activate full response protocol",
+      "Mobilize all available resources",
+      "Issue public warning through all channels",
+      "Activate mutual aid agreements"
+    ],
+    "resources": {
+      "aerial": "All available aircraft, pre-positioned",
+      "ground": "Full mobilization, all crews",
+      "command": "Type 1 Incident Management Team",
+      "mutual_aid": "Activate regional agreements"
+    },
+    "public_message": "IMMINENT DANGER: Rapid fire spread expected within 60 minutes. Evacuate immediately if in affected areas.",
+    "evacuation_status": "IMMEDIATE - Execute evacuation orders"
+  }
+}

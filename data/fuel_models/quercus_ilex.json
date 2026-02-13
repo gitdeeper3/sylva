@@ -1,0 +1,47 @@
+{
+  "fuel_type": "quercus_ilex",
+  "common_name": "Holm Oak",
+  "description": "Evergreen oak woodland, dense canopy structure",
+  "critical_thresholds": {
+    "lfm": 90.0,
+    "dfm": 9.0,
+    "cbd": 0.18,
+    "vpd": 28.0,
+    "dc": 450.0
+  },
+  "fuel_load_range": [20.0, 80.0],
+  "fuel_depth_range": [0.5, 4.0],
+  "rothermel_coefficients": {
+    "net_fuel_load": 3.2,
+    "surface_area_volume_ratio": 2800.0,
+    "fuel_bed_depth": 1.2,
+    "moisture_of_extinction": 0.30,
+    "heat_content": 18400.0,
+    "ovendry_density": 580.0,
+    "particle_density": 1540.0
+  },
+  "rsi_weights": {
+    "lfm": 0.18,
+    "dfm": 0.14,
+    "cbd": 0.14,
+    "sfl": 0.12,
+    "fbd": 0.10,
+    "wind": 0.14,
+    "vpd": 0.07,
+    "aspect": 0.05,
+    "dc": 0.06
+  },
+  "calibration_coefficients": {
+    "beta_0": -4.65,
+    "beta_1": 0.11,
+    "beta_2": -0.0007,
+    "beta_3": 0.32
+  },
+  "validation": {
+    "cases": 42,
+    "pod": 0.81,
+    "far": 0.17,
+    "csi": 0.69,
+    "auc": 0.86
+  }
+}

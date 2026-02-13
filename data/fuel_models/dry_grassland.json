@@ -1,0 +1,47 @@
+{
+  "fuel_type": "dry_grassland",
+  "common_name": "Dry Mediterranean Grassland",
+  "description": "Annual grasses, highly available fine fuels",
+  "critical_thresholds": {
+    "lfm": 70.0,
+    "dfm": 6.0,
+    "cbd": 0.10,
+    "vpd": 30.0,
+    "dc": 300.0
+  },
+  "fuel_load_range": [5.0, 30.0],
+  "fuel_depth_range": [0.3, 1.5],
+  "rothermel_coefficients": {
+    "net_fuel_load": 0.8,
+    "surface_area_volume_ratio": 4500.0,
+    "fuel_bed_depth": 0.4,
+    "moisture_of_extinction": 0.15,
+    "heat_content": 17200.0,
+    "ovendry_density": 320.0,
+    "particle_density": 1540.0
+  },
+  "rsi_weights": {
+    "lfm": 0.15,
+    "dfm": 0.18,
+    "cbd": 0.08,
+    "sfl": 0.12,
+    "fbd": 0.10,
+    "wind": 0.18,
+    "vpd": 0.10,
+    "aspect": 0.04,
+    "dc": 0.05
+  },
+  "calibration_coefficients": {
+    "beta_0": -4.21,
+    "beta_1": 0.14,
+    "beta_2": -0.0010,
+    "beta_3": 0.30
+  },
+  "validation": {
+    "cases": 24,
+    "pod": 0.79,
+    "far": 0.19,
+    "csi": 0.66,
+    "auc": 0.84
+  }
+}

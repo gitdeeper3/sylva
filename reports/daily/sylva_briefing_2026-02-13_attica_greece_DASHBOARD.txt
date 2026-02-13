@@ -1,0 +1,118 @@
+================================================================================
+🔥 SYLVA OPERATIONAL DASHBOARD ⚫ EXTREME RISK
+================================================================================
+📍 Attica, Greece          ⏱️  2026-02-13T07:57:12          🔗 DOI: 10.5281/zenodo.18627186
+
+📊 EXECUTIVE SUMMARY
+────────────────────────────────────────────────────────────────────────────────
+RISK LEVEL:     ⚫ EXTREME (Score: 83/100)
+DESCRIPTION:    Type 1 Incident Complexity - Catastrophic fire behavior
+CONFIDENCE:     HIGH
+VALID PERIOD:   Next 120 minutes
+
+⚠️  CRITICAL FINDINGS:
+  • DFM: 5.1% - Critical drought
+  • Wind: 10.4 m/s - Strong/Extreme
+  • VPD: 46.7 hPa - Extreme drying
+  • DC: 487 - Severe drought
+
+🔥 FIRE ENVIRONMENT TREND
+────────────────────────────────────────────────────────────────────────────────
+OVERALL:    🟠 🟠 ESCALATING
+
+WIND:       ↑ INCREASING (Δ+1.5 m/s)
+VPD:        ↑ DRYING (Δ+4.4 hPa)
+DFM:        ↓ DRYING (Δ+0.3%)
+
+📈 FIRE BEHAVIOR FORECAST
+────────────────────────────────────────────────────────────────────────────────
+
+FUEL TYPE           ROS (m/min)    PROBABILITY    LEAD TIME    HAZARD
+────────────────────────────────────────────────────────────────
+Pinus Halepensis       33.9 m/min       76.2%      90 min    🟠ARNING
+Quercus Ilex           27.6 m/min       75.6%      90 min    🟠ARNING
+Mediterranean Maqu     38.9 m/min       79.2%      90 min    🟠ARNING
+Dry Grassland          47.7 m/min       78.4%      90 min    🟠ARNING
+
+📍 SPREAD PROJECTION
+────────────────────────────────────────────────────────────────────────────────
+MAXIMUM SPREAD:     4.3 km in 90 minutes
+DRIVER FUEL TYPE:   Dry Grassland (47.7 m/min)
+THREAT ZONE:        363.1 ha (Elliptical model)
+EVACUATION BUFFER:  6.4 km
+
+🏠 WUI THREAT:       Dry Grassland - Arrival in 31 minutes
+                     Estimated: 08:28
+
+⏱️  ETA TO KEY DISTANCES:
+   1 km: 08:18 (21 min)
+   2 km: 08:39 (42 min)
+   5 km: 09:42 (105 min)
+
+🛡️  CONTAINMENT ASSESSMENT
+────────────────────────────────────────────────────────────────────────────────
+DIFFICULTY:         🔴 VERY DIFFICULT
+INITIAL ATTACK:     NOT FEASIBLE
+OPTIMAL WINDOW:     < 30 minutes after ignition
+SUCCESS PROB:       30%
+
+🌲 CROWN FIRE POTENTIAL
+────────────────────────────────────────────────────────────────────────────────
+PROBABILITY:        🔴 95% - VERY HIGH
+SPOTTING:           VERY HIGH - Long distance spotting (>1.5 km)
+
+🚨 EVACUATION DECISION
+────────────────────────────────────────────────────────────────────────────────
+COMMAND DECISION:   🔴 IMMEDIATE EVACUATION
+WUI DISTANCE:       1.5 km
+ESTIMATED ARRIVAL:  31 minutes
+
+🎯 PRIMARY RISK DRIVERS
+────────────────────────────────────────────────────────────────────────────────
+1. DFM: 100% ██████████
+2. VPD: 100% ██████████
+3. DC: 97% █████████
+
+🚒 RESOURCE REQUIREMENTS
+────────────────────────────────────────────────────────────────────────────────
+HAND CREWS:     22
+FIRE ENGINES:   11
+AIR TANKERS:    3
+HELICOPTERS:    3
+DOZERS:         2
+OVERHEAD:       Type 1
+24h COST:       $675,000
+
+📅 SEASONAL CONTEXT
+────────────────────────────────────────────────────────────────────────────────
+DC 487 - 95th percentile (Very severe drought)
+
+⚡ OPERATIONAL DIRECTIVES
+────────────────────────────────────────────────────────────────────────────────
+ACTION LEVEL:   ⚫ EXTREME - Type 1 Incident Complexity - Catastrophic fire behavior
+
+IMMEDIATE ACTIONS:
+  1. IMMEDIATE EVACUATION - WUI arrival in 31 minutes
+  2. ACTIVATE Type 1 Incident Management Team
+  3. CONTAINMENT: NOT FEASIBLE - structure protection only
+  4. SPREAD: 4.3km in 90min (max from Dry Grassland)
+  5. RESOURCES: 22 crews, 3 air tankers
+
+PUBLIC INFO:    CRITICAL: Extreme fire danger. WUI arrival in <30 minutes. Evacuate immediately.
+
+🔴 ACTIVE ALERTS
+────────────────────────────────────────────────────────────────────────────────
+  • 🔴 CRITICAL: RISK: EXTREME - WUI arrival in 31min
+  • 🔴 CRITICAL: CROWN FIRE: 95% potential - VERY HIGH - Long distance spotting (>1.5 km)
+  • 🔴 CRITICAL: CONTAINMENT: VERY DIFFICULT - NOT FEASIBLE
+
+⚠️  MODEL LIMITATIONS
+────────────────────────────────────────────────────────────────────────────────
+  • Assumes homogeneous fuel bed continuity
+  • Does not include suppression effects on fire behavior
+  • No stochastic modeling of spotting ignition
+
+================================================================================
+✅ SYLVA v2.5 Operational Dashboard - 2026-02-13 07:57
+🔗 DOI: 10.5281/zenodo.18627186 | Command Center Authorized Use Only
+================================================================================

@@ -1,0 +1,14 @@
+# الملفات الأساسية للوصف والتوثيق
+include README.md
+include LICENSE
+include AUTHORS.md
+include CHANGELOG.md
+
+# تضمين ملفات البيانات
+recursive-include sylva_fire/data *.json
+recursive-include sylva_fire/data *.csv
+
+# استبعاد الملفات غير الضرورية
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .DS_Store

@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYLVA | Mediterranean & North Africa • Operational Intelligence</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* نفس الـ CSS السابق */
+        :root {
+            --bg-deep: #0a1a0f;
+            --bg-card: #0f1f14;
+            --accent-green: #00ff88;
+            --accent-forest: #2d5f3f;
+            --accent-north: #ffaa33;
+            --text-main: #e8f5e9;
+            --text-dim: #81c784;
+            --footer-bg: #0d1710;
+            --glow: rgba(0, 255, 136, 0.3);
+            --critical: #ff3d00;
+            --very-high: #ff6f00;
+            --high: #ffc107;
+            --moderate: #4caf50;
+            --low: #2196f3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(10, 26, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .logo i {
+            background: linear-gradient(to right, #fff, var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-forest));
+            color: var(--bg-deep);
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .hero {
+            min-height: 35vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a3d2a 0%, var(--bg-deep) 70%);
+            padding: 120px 20px 40px;
+            position: relative;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .badge {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--accent-green);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--accent-green);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            margin: 0 0 20px 0;
+            background: linear-gradient(to right, #fff, var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .dashboard-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 5%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent-green);
+        }
+
+        .stat-info h3 {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-unit {
+            font-size: 0.9rem;
+            color: var(--accent-green);
+            margin-left: 5px;
+        }
+
+        .map-section {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            background: var(--bg-card);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            height: 500px;
+        }
+
+        #fire-map {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-deep);
+        }
+
+        .stats-panel {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-green);
+        }
+
+        .zone-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .zone-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(10, 26, 15, 0.6);
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .zone-item:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateX(5px);
+        }
+
+        .zone-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .zone-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .zone-risk {
+            font-weight: 600;
+        }
+
+        .north-africa-badge {
+            display: inline-block;
+            background: rgba(255, 170, 51, 0.2);
+            color: var(--accent-north);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+            border: 1px solid var(--accent-north);
+        }
+
+        .time-slider-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,255,136,0.1);
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .slider-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-green);
+        }
+
+        .time-label {
+            background: rgba(0,255,136,0.15);
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        input[type=range] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-forest) 100%);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid var(--accent-green);
+            box-shadow: 0 0 15px var(--accent-green);
+            transition: 0.2s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-title i {
+            color: var(--accent-green);
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 250px !important;
+        }
+
+        .zones-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0 20px;
+        }
+
+        .zones-title {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .zones-title i {
+            color: var(--accent-green);
+        }
+
+        .zones-count {
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+        }
+
+        .zones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .zone-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            border-left: 6px solid;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-left-width: 6px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .zone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: rgba(0,255,136,0.3);
+        }
+
+        .zone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .zone-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .zone-country {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .zone-ros {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .risk-badge {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 15px;
+        }
+
+        .confidence-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-dim);
+            margin-left: 10px;
+        }
+
+        .zone-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .main-footer {
+            background-color: var(--footer-bg);
+            padding: 60px 5% 30px 5%;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column h4 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .copyright {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-dim);
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 50px;
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 8px;
+            border: 1px solid #ff6b6b;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .map-section { grid-template-columns: 1fr; }
+            .charts-section { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            h1 { font-size: 2.2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00cc66;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-fire"></i>
+                <span>SYLVA</span>
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/dashboard" style="color: var(--accent-green);">Dashboard</a>
+                <a href="https://gitlab.com/gitdeeper3/sylva" target="_blank">GitLab</a>
+                <button class="cta-button" onclick="loadFireZones()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-icon">🌲🔥🌍</div>
+        <div class="badge">
+            <i class="fas fa-database"></i>
+            <span id="liveStatus">SYLVA • CONNECTING TO API...</span>
+        </div>
+        <h1>Mediterranean & North Africa Fire Zones</h1>
+        <p class="subtitle">
+            Real-time monitoring from <span id="totalZonesCount" style="color: var(--accent-green); font-weight: 700;">0</span> high-risk zones • Operational Intelligence • v2.5
+        </p>
+    </section>
+
+    <div class="dashboard-section">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                <div class="stat-info">
+                    <h3>Active Zones</h3>
+                    <div><span class="stat-number" id="activeZones">0</span><span class="stat-unit">zones</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-tree"></i></div>
+                <div class="stat-info">
+                    <h3>Fuel Types</h3>
+                    <div><span class="stat-number" id="fuelTypesCount">0</span><span class="stat-unit">types</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="stat-info">
+                    <h3>High Risk</h3>
+                    <div><span class="stat-number" id="highRiskCount">0</span><span class="stat-unit">zones</span></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-home"></i></div>
+                <div class="stat-info">
+                    <h3>Structures at Risk</h3>
+                    <div><span class="stat-number" id="structuresCount">0</span><span class="stat-unit">buildings</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-section">
+            <div class="map-container">
+                <div id="fire-map"></div>
+            </div>
+            <div class="stats-panel">
+                <div class="panel-title">
+                    <i class="fas fa-chart-pie"></i> Mediterranean & North Africa Risk Zones
+                </div>
+                <div class="zone-stats" id="zoneStatsList">
+                    <div class="loading">Loading zones from SYLVA API...</div>
+                </div>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-dim);">Last Update:</span>
+                        <span style="color: var(--accent-green);" id="lastUpdate">--:--:--</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-dim);">Data Source:</span>
+                        <span style="color: #fff;" id="dataSource">SYLVA API</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px;">
+                        <span style="color: var(--text-dim);">North Africa:</span>
+                        <span style="color: var(--accent-north);" id="northAfricaCount">0 zones</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time Slider -->
+        <div class="time-slider-container">
+            <div class="slider-header">
+                <div class="slider-title">
+                    <i class="fas fa-clock"></i>
+                    <span style="font-weight: 600;">Evacuation Lead Time Simulation</span>
+                </div>
+                <span class="time-label" id="leadTimeLabel">90 minutes</span>
+            </div>
+            <input type="range" id="timeSlider" min="30" max="120" value="90" step="15">
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; color: var(--text-dim); font-size: 0.8rem;">
+                <span>30min</span><span>45min</span><span>60min</span><span>75min</span><span>90min</span><span>105min</span><span>120min</span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="fas fa-chart-pie"></i> Risk Distribution (<span id="totalZonesForChart">0</span> Zones)
+                </div>
+                <canvas id="riskChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">
+                    <i class="fas fa-chart-bar"></i> WUI Structures at Risk
+                </div>
+                <canvas id="wuiChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Zones Grid Header -->
+        <div class="zones-header">
+            <h2 class="zones-title">
+                <i class="fas fa-map-marker-alt"></i> Mediterranean & North Africa Fire Zones
+            </h2>
+            <span class="zones-count" id="activeZonesCount">0 Zones</span>
+        </div>
+
+        <!-- Zones Grid -->
+        <div id="zonesContainer" class="zones-grid">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin fa-3x"></i>
+                <p style="margin-top: 20px;">Loading Mediterranean and North African zones from SYLVA API...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4><i class="fas fa-project-diagram"></i> Project</h4>
+                <ul class="footer-links">
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva" target="_blank">GitLab Repository</a></li>
+                    <li><a href="https://doi.org/10.5281/zenodo.18627186" target="_blank">Zenodo DOI</a></li>
+                    <li><a href="https://sylva-fire.readthedocs.io" target="_blank">Documentation</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-book"></i> Documentation</h4>
+                <ul class="footer-links">
+                    <li><a href="/">Home Page</a></li>
+                    <li><a href="/dashboard">Live Dashboard</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva/-/wikis/API-Reference" target="_blank">API Reference</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-users"></i> Community</h4>
+                <ul class="footer-links">
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva/-/issues" target="_blank">Issue Tracker</a></li>
+                    <li><a href="mailto:gitdeeper@gmail.com">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                Copyright © SYLVA 🌲 - 2026 | Mediterranean & North Africa Civil Protection • CC-BY-4.0
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // ============================================
+        // SYLVA: MEDITERRANEAN & NORTH AFRICA FIRE ZONES
+        // LIVE DATA FROM NETLIFY FUNCTIONS (SECURE)
+        // ============================================
+
+        let map;
+        let markers = [];
+        let riskChart, wuiChart;
+        let allZones = [];
+        let currentLeadTime = 90;
+
+        // ============ FUEL TYPE ROS MAPPING ============
+        const FUEL_ROS = {
+            'Dry_grassland': 47.7,
+            'Pinus_halepensis': 33.9,
+            'Mediterranean_maquis': 38.9,
+            'Quercus_ilex': 27.6,
+            'Quercus_suber': 28.5,
+            'Pinus_pinaster': 35.2
+        };
+
+        // ============ RISK LEVEL CALCULATION ============
+        function calculateRiskLevel(wuiDistance) {
+            if (!wuiDistance) return { level: 'MODERATE', color: '#4caf50' };
+            if (wuiDistance < 1.5) return { level: 'CRITICAL', color: '#ff3d00' };
+            if (wuiDistance < 2.0) return { level: 'VERY HIGH', color: '#ff6f00' };
+            if (wuiDistance < 2.5) return { level: 'HIGH', color: '#ffc107' };
+            return { level: 'MODERATE', color: '#4caf50' };
+        }
+
+        // ============ Initialize Map ============
+        function initMap() {
+            map = L.map('fire-map', {
+                center: [32.0, 12.0],
+                zoom: 5,
+                zoomControl: true
+            });
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '©CARTO, ©OpenStreetMap',
+                maxZoom: 12,
+                minZoom: 4
+            }).addTo(map);
+
+            // Add legend
+            var legend = L.control({ position: 'bottomright' });
+            legend.onAdd = function(map) {
+                var div = L.DomUtil.create('div', 'info legend');
+                div.style.background = 'rgba(15,31,20,0.9)';
+                div.style.padding = '12px';
+                div.style.borderRadius = '8px';
+                div.style.border = '1px solid #00ff88';
+                div.style.color = '#fff';
+                div.innerHTML = '<h4 style="margin:0 0 10px 0; color:#00ff88;">🔥 Fire Risk Level</h4>' +
+                    '<i style="background:#ff3d00; width:12px; height:12px; display:inline-block; border-radius:50%;"></i> CRITICAL<br>' +
+                    '<i style="background:#ff6f00; width:12px; height:12px; display:inline-block; border-radius:50%;"></i> VERY HIGH<br>' +
+                    '<i style="background:#ffc107; width:12px; height:12px; display:inline-block; border-radius:50%;"></i> HIGH<br>' +
+                    '<i style="background:#4caf50; width:12px; height:12px; display:inline-block; border-radius:50%;"></i> MODERATE' +
+                    '<hr style="border-color:#00ff8840; margin:8px 0;">' +
+                    '<span style="color:#ffaa33;">🌍 North Africa</span>';
+                return div;
+            };
+            legend.addTo(map);
+        }
+
+        // ============ Update Map Markers ============
+        function updateMapMarkers(zones) {
+            if (map) {
+                markers.forEach(m => map.removeLayer(m));
+                markers = [];
+
+                zones.forEach(zone => {
+                    const risk = calculateRiskLevel(zone.wui_distance_km);
+                    const color = risk.color;
+                    
+                    const size = 8 + (zone.wui_structures_estimate || 500) / 400;
+                    
+                    const marker = L.circleMarker([zone.latitude, zone.longitude], {
+                        radius: Math.min(16, size),
+                        fillColor: color,
+                        color: '#fff',
+                        weight: 2,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+                    
+                    const isNorthAfrica = ['Morocco', 'Algeria', 'Tunisia', 'Libya', 'Egypt'].includes(zone.region);
+                    const badgeHtml = isNorthAfrica ? '<span style="color:#ffaa33;"> 🌍 North Africa</span>' : '';
+                    
+                    marker.bindPopup(`
+                        <div style="padding: 12px; min-width: 250px; background: #0f1f14; color: #fff;">
+                            <h3 style="color: ${color}; margin-bottom: 10px;">
+                                <i class="fas fa-fire"></i> ${zone.zone_name}
+                                ${badgeHtml}
+                            </h3>
+                            <p><strong>Country:</strong> ${zone.region}</p>
+                            <p><strong>Fuel Type:</strong> ${zone.primary_fuel_code?.replace(/_/g, ' ') || 'Unknown'}</p>
+                            <p><strong>Structures:</strong> ${zone.wui_structures_estimate?.toLocaleString() || 0}</p>
+                            <p><strong>WUI Distance:</strong> ${zone.wui_distance_km || 2.0} km</p>
+                            <p><strong>ROS:</strong> ${FUEL_ROS[zone.primary_fuel_code] || 35.0} m/min</p>
+                            <p style="margin-top: 10px;"><strong>Risk Level:</strong> <span style="color: ${color};">${risk.level}</span></p>
+                        </div>
+                    `);
+                    
+                    markers.push(marker);
+                });
+            }
+        }
+
+        // ============ Update Zone Stats Panel ============
+        function updateZoneStats(zones) {
+            const container = document.getElementById('zoneStatsList');
+            
+            const riskOrder = { 'CRITICAL': 1, 'VERY HIGH': 2, 'HIGH': 3, 'MODERATE': 4 };
+            
+            let html = '';
+            zones.sort((a, b) => {
+                const riskA = calculateRiskLevel(a.wui_distance_km);
+                const riskB = calculateRiskLevel(b.wui_distance_km);
+                return (riskOrder[riskA.level] || 99) - (riskOrder[riskB.level] || 99);
+            }).slice(0, 10).forEach(zone => {
+                const risk = calculateRiskLevel(zone.wui_distance_km);
+                const isNorthAfrica = ['Morocco', 'Algeria', 'Tunisia', 'Libya', 'Egypt'].includes(zone.region);
+                const nameDisplay = isNorthAfrica ? `${zone.zone_name} 🌍` : zone.zone_name;
+                
+                html += `
+                    <div class="zone-item">
+                        <span class="zone-name">
+                            <span class="zone-dot" style="background: ${risk.color};"></span>
+                            ${nameDisplay}
+                        </span>
+                        <span class="zone-risk" style="color: ${risk.color};">
+                            ${risk.level}
+                        </span>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // ============ Update Charts ============
+        function updateCharts(zones) {
+            const riskCounts = {
+                'CRITICAL': 0,
+                'VERY HIGH': 0,
+                'HIGH': 0,
+                'MODERATE': 0
+            };
+
+            zones.forEach(zone => {
+                const risk = calculateRiskLevel(zone.wui_distance_km);
+                riskCounts[risk.level]++;
+            });
+
+            if (riskChart) riskChart.destroy();
+            riskChart = new Chart(document.getElementById('riskChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['CRITICAL', 'VERY HIGH', 'HIGH', 'MODERATE'],
+                    datasets: [{
+                        data: [riskCounts.CRITICAL, riskCounts['VERY HIGH'], riskCounts.HIGH, riskCounts.MODERATE],
+                        backgroundColor: ['#ff3d00', '#ff6f00', '#ffc107', '#4caf50'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#81c784' } }
+                    }
+                }
+            });
+
+            const topZones = zones
+                .filter(z => z.wui_structures_estimate > 0)
+                .sort((a, b) => b.wui_structures_estimate - a.wui_structures_estimate)
+                .slice(0, 5);
+            
+            if (wuiChart) wuiChart.destroy();
+            wuiChart = new Chart(document.getElementById('wuiChart'), {
+                type: 'bar',
+                data: {
+                    labels: topZones.map(z => z.zone_name.split(' ')[0]),
+                    datasets: [{
+                        label: 'Structures at Risk',
+                        data: topZones.map(z => z.wui_structures_estimate || 0),
+                        backgroundColor: topZones.map(z => {
+                            const risk = calculateRiskLevel(z.wui_distance_km);
+                            return risk.color;
+                        }),
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            grid: { color: 'rgba(255,255,255,0.1)' }, 
+                            ticks: { color: '#81c784' } 
+                        },
+                        x: { 
+                            ticks: { color: '#81c784', maxRotation: 45 } 
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // ============ Update Zones Grid ============
+        function updateZonesGrid(zones) {
+            const container = document.getElementById('zonesContainer');
+            
+            if (zones.length === 0) {
+                container.innerHTML = '<div class="loading">No fire zones found in database</div>';
+                document.getElementById('activeZonesCount').innerHTML = '0 Zones';
+                return;
+            }
+            
+            let html = '';
+            zones.sort((a, b) => (b.wui_structures_estimate || 0) - (a.wui_structures_estimate || 0)).forEach(zone => {
+                const risk = calculateRiskLevel(zone.wui_distance_km);
+                const ros = FUEL_ROS[zone.primary_fuel_code] || 35.0;
+                const isNorthAfrica = ['Morocco', 'Algeria', 'Tunisia', 'Libya', 'Egypt'].includes(zone.region);
+                const countryFlag = isNorthAfrica ? ' 🌍' : '';
+                
+                html += `
+                    <div class="zone-card" style="border-left-color: ${risk.color};">
+                        <div class="zone-header">
+                            <span class="zone-name">
+                                <i class="fas fa-fire"></i>
+                                ${zone.zone_name}
+                                ${isNorthAfrica ? '<span class="north-africa-badge">North Africa</span>' : ''}
+                            </span>
+                            <span class="zone-country">${zone.region}${countryFlag}</span>
+                        </div>
+                        <div class="zone-ros" style="color: ${risk.color};">
+                            ${ros} m/min
+                            <span class="confidence-badge">
+                                Lead: ${currentLeadTime}min
+                            </span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="risk-badge" style="background: ${risk.color}20; color: ${risk.color}; border: 1px solid ${risk.color};">
+                                <i class="fas fa-exclamation-triangle"></i> ${risk.level} RISK
+                            </span>
+                        </div>
+                        <div class="zone-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Fuel Type</span>
+                                <span class="detail-value">${zone.primary_fuel_code?.replace(/_/g, ' ') || 'Unknown'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">WUI Distance</span>
+                                <span class="detail-value">${zone.wui_distance_km || 2.0} km</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Structures</span>
+                                <span class="detail-value">${zone.wui_structures_estimate?.toLocaleString() || 0}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Zone ID</span>
+                                <span class="detail-value">${zone.zone_id || 'N/A'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            document.getElementById('activeZonesCount').innerHTML = zones.length + ' Zones';
+            document.getElementById('activeZones').innerHTML = zones.length;
+            document.getElementById('totalZonesCount').innerHTML = zones.length;
+            document.getElementById('totalZonesForChart').innerHTML = zones.length;
+            
+            const northAfricaCount = zones.filter(z => 
+                ['Morocco', 'Algeria', 'Tunisia', 'Libya', 'Egypt'].includes(z.region)
+            ).length;
+            document.getElementById('northAfricaCount').innerHTML = northAfricaCount + ' zones';
+            
+            const totalStructures = zones.reduce((sum, z) => sum + (z.wui_structures_estimate || 0), 0);
+            document.getElementById('structuresCount').innerHTML = totalStructures.toLocaleString();
+            
+            const highRiskCount = zones.filter(z => {
+                const risk = calculateRiskLevel(z.wui_distance_km);
+                return risk.level === 'CRITICAL' || risk.level === 'VERY HIGH';
+            }).length;
+            document.getElementById('highRiskCount').innerHTML = highRiskCount;
+            
+            const fuelTypes = new Set();
+            zones.forEach(z => {
+                if (z.primary_fuel_code) fuelTypes.add(z.primary_fuel_code);
+            });
+            document.getElementById('fuelTypesCount').innerHTML = fuelTypes.size;
+        }
+
+        // ============ Time Slider ============
+        document.getElementById('timeSlider')?.addEventListener('input', function(e) {
+            currentLeadTime = e.target.value;
+            document.getElementById('leadTimeLabel').innerHTML = currentLeadTime + ' minutes';
+            
+            const cards = document.querySelectorAll('.confidence-badge');
+            cards.forEach(card => {
+                card.innerHTML = `Lead: ${currentLeadTime}min`;
+            });
+        });
+
+        // ============ Load Live Data from Netlify API ============
+        async function loadFireZones() {
+            try {
+                document.getElementById('liveStatus').innerHTML = 'SYLVA • FETCHING FROM API...';
+                document.getElementById('dataSource').innerHTML = 'SYLVA API (Loading...)';
+                
+                // Call Netlify Function - آمن تماماً، لا مفتاح في الصفحة!
+                const response = await fetch('/api/get-fire-zones');
+                const result = await response.json();
+                
+                if (!result.success) {
+                    throw new Error(result.error || 'Failed to fetch data');
+                }
+                
+                const { zones, stats } = result.data;
+                
+                if (zones && zones.length > 0) {
+                    console.log(`✅ Successfully loaded ${zones.length} zones from SYLVA API`);
+                    allZones = zones;
+                    
+                    document.getElementById('liveStatus').innerHTML = `SYLVA • ${zones.length} MEDITERRANEAN & NORTH AFRICA ZONES • API LIVE`;
+                    document.getElementById('dataSource').innerHTML = 'SYLVA API Live';
+                    document.getElementById('lastUpdate').innerHTML = new Date().toLocaleTimeString();
+                    
+                    updateZoneStats(allZones);
+                    updateCharts(allZones);
+                    updateZonesGrid(allZones);
+                    updateMapMarkers(allZones);
+                    
+                } else {
+                    throw new Error('No zones found in database');
+                }
+                
+            } catch (error) {
+                console.error('❌ API error:', error);
+                document.getElementById('liveStatus').innerHTML = 'SYLVA • API CONNECTION ERROR';
+                document.getElementById('dataSource').innerHTML = '⚠️ Connection Failed';
+                
+                document.getElementById('zonesContainer').innerHTML = `
+                    <div class="error-message" style="grid-column: 1/-1;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <h3 style="margin-bottom: 15px;">Failed to Connect to SYLVA API</h3>
+                        <p style="margin-bottom: 10px;">${error.message}</p>
+                        <p style="margin-bottom: 20px;">Please check that Netlify Functions are deployed correctly.</p>
+                        <button class="cta-button" onclick="loadFireZones()" style="margin: 20px auto;">
+                            <i class="fas fa-sync-alt"></i> Retry Connection
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // ============ Initialize ============
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap();
+            loadFireZones();
+            setInterval(loadFireZones, 300000);
+        });
+
+        // ============ Global Functions ============
+        window.loadFireZones = loadFireZones;
+    </script>
+</body>
+</html>

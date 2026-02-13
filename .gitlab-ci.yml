@@ -1,0 +1,51 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+before_script:
+  - python -V
+  - python -m venv venv
+  - source venv/bin/activate
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+  - pip install pytest pytest-cov
+
+test:
+  stage: test
+  script:
+    - pytest tests/ --cov=sylva --cov-report=html
+    - pylint sylva --exit-zero
+  artifacts:
+    paths:
+      - htmlcov/
+    expire_in: 30 days
+
+build:
+  stage: build
+  script:
+    - pip install build
+    - python -m build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 30 days
+
+pages:
+  stage: deploy
+  script:
+    - pip install mkdocs mkdocs-material
+    - mkdocs build --site-dir public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main

@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use SYLVA v2.5.5 in your research, please cite it as below."
+authors:
+  - family-names: "Baladi"
+    given-names: "Samir"
+    orcid: "https://orcid.org/0009-0003-8903-0029"
+    email: "gitdeeper@gmail.com"
+title: "SYLVA: A Thermodynamic-Fuel Continuum Framework for Wildfire Spread Rate and Fireline Intensity Estimation in Mediterranean Forest Systems"
+version: 2.5.5
+doi: 10.5281/zenodo.18627186
+date-released: 2026-02-13
+url: "https://gitlab.com/gitdeeper3/sylva"
+repository-code: "https://gitlab.com/gitdeeper3/sylva"
+license: "CC-BY-4.0"
+type: software
+keywords:
+  - wildfire
+  - fire spread
+  - mediterranean
+  - operational forecasting
+  - machine learning
+  - remote sensing
+  - Rothermel
+  - Byram
+  - Van Wagner
+  - operational intelligence
+  - WUI evacuation
+  - threat zone modeling

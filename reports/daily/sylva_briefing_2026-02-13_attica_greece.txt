@@ -1,0 +1,169 @@
+==========================================================================================
+                🔥 SYLVA RAPID FIRE SPREAD FORECAST - OPERATIONAL BRIEFING                 
+==========================================================================================
+
+DATE:          2026-02-13
+TIME:          2026-02-13T07:57:12
+REGION:        Attica, Greece
+MODEL:         SYLVA v2.5
+DOI:           10.5281/zenodo.18627186
+
+------------------------------------------------------------------------------------------
+
+📊 EXECUTIVE SUMMARY
+··························································································
+
+Risk Level:     ⚫ EXTREME (Score: 83/100)
+Description:    Type 1 Incident Complexity - Catastrophic fire behavior
+Confidence:     HIGH (Model-based deterministic)
+Valid Period:   Next 120 minutes
+
+KEY FINDINGS:
+  • DFM: 5.1% - Critical drought
+  • Wind: 10.4 m/s - Strong/Extreme
+  • VPD: 46.7 hPa - Extreme drying
+  • DC: 487 - Severe drought
+
+CRITICAL PARAMETERS:
+  • DFM: 5.1% (Critical (<8%)) [Norm: 1.00]
+  • WIND: 10.4 m/s (Critical (>8 m/s)) [Norm: 1.00]
+  • VPD: 46.7 hPa (Critical (>25 hPa)) [Norm: 1.00]
+  • DC: 487 (Critical (>400)) [Norm: 1.00]
+
+------------------------------------------------------------------------------------------
+
+📈 FORECAST SUMMARY
+··························································································
+
+Pinus Halepensis
+  Probability:  76.2%
+  ROS:          33.9 m/min
+  Lead Time:    90 min
+
+Quercus Ilex
+  Probability:  75.6%
+  ROS:          27.6 m/min
+  Lead Time:    90 min
+
+Mediterranean Maquis
+  Probability:  79.2%
+  ROS:          38.9 m/min
+  Lead Time:    90 min
+
+Dry Grassland
+  Probability:  78.4%
+  ROS:          47.7 m/min
+  Lead Time:    90 min
+
+------------------------------------------------------------------------------------------
+
+🔥 FIRE ENVIRONMENT TREND
+··························································································
+
+Overall: N/A
+Wind:    {'icon': '↑', 'trend': 'INCREASING', 'delta': 1.5}
+VPD:     {'icon': '↑', 'trend': 'DRYING', 'delta': 4.4}
+DFM:     {'icon': '↓', 'trend': 'DRYING', 'delta': 0.3}
+
+------------------------------------------------------------------------------------------
+
+📍 SPREAD PROJECTION
+··························································································
+
+Distance (90min): N/A km
+Methodology:      Based on max ROS (47.7 m/min) from Dry Grassland
+Evacuation Buffer: 6.4 km
+Threat Zone:      363.1 ha
+
+ETA to Key Distances:
+  • 1 km: 08:18 (21 min)
+  • 2 km: 08:39 (42 min)
+  • 5 km: 09:42 (105 min)
+
+------------------------------------------------------------------------------------------
+
+🛡️ CONTAINMENT DIFFICULTY
+··························································································
+
+Difficulty: 🔴 VERY DIFFICULT
+Score:      0.77/1.0
+Initial Attack: NOT FEASIBLE
+Optimal Window: < 30 minutes after ignition
+Est. Containment: 6.0 hours
+Success Prob:    30%
+
+------------------------------------------------------------------------------------------
+
+🌲 CROWN FIRE POTENTIAL
+··························································································
+
+Probability: 95%
+Status:      Crown fire potential: 95%
+Category:    VERY HIGH
+Spotting:    VERY HIGH - Long distance spotting (>1.5 km)
+
+------------------------------------------------------------------------------------------
+
+🏠 WUI THREAT ASSESSMENT
+··························································································
+
+Threat Level: 🔴 HIGH
+Distance:     1.5 km
+Arrival:      31 minutes
+Structures:   N/A
+Decision:     IMMEDIATE EVACUATION
+
+------------------------------------------------------------------------------------------
+
+📊 RISK ANALYSIS
+··························································································
+
+Primary Drivers: DFM, VPD, DC
+Resource Cost:   $675,000/24h
+
+Resource Requirements:
+  • Hand Crews:  22
+  • Fire Engines: 11
+  • Air Tankers: 3
+  • Helicopters: 3
+  • Dozers:      2
+  • Overhead:    Type 1
+
+------------------------------------------------------------------------------------------
+
+🚨 OPERATIONAL RECOMMENDATIONS
+··························································································
+
+⚫ EXTREME - Type 1 Incident Complexity - Catastrophic fire behavior
+
+ACTIONS:
+  • IMMEDIATE EVACUATION - WUI arrival in 31 minutes
+  • ACTIVATE Type 1 Incident Management Team
+  • CONTAINMENT: NOT FEASIBLE - structure protection only
+  • SPREAD: 4.3km in 90min (max from Dry Grassland)
+  • RESOURCES: 22 crews, 3 air tankers
+
+PUBLIC MESSAGE: CRITICAL: Extreme fire danger. WUI arrival in <30 minutes. Evacuate immediately.
+
+------------------------------------------------------------------------------------------
+
+📅 SEASONAL CONTEXT
+··························································································
+
+DC 487 - 95th percentile (Very severe drought)
+
+------------------------------------------------------------------------------------------
+
+📌 REPORT INFORMATION
+··························································································
+
+Generated:  2026-02-13T07:57:12.047099
+Model:      SYLVA v2.5
+DOI:        10.5281/zenodo.18627186
+
+⚠️  DISCLAIMER
+  This is an automated decision support tool. Always use professional
+  judgment and consider multiple information sources. Not a substitute
+  for operational expertise and local knowledge.
+
+==========================================================================================

@@ -1,0 +1,32 @@
+{
+  "name": "sylva-fire",
+  "version": "2.5.0",
+  "description": "SYLVA - Operational Intelligence for Mediterranean Wildfire Rapid Spread Forecasting",
+  "main": "public/dashboard.html",
+  "scripts": {
+    "start": "live-server public",
+    "build": "echo 'Static site - no build step required'",
+    "deploy": "netlify deploy --prod",
+    "update": "node scripts/update-report.js"
+  },
+  "dependencies": {
+    "@netlify/functions": "^1.6.0",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "author": "Samir Baladi",
+  "license": "CC-BY-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/gitdeeper3/sylva"
+  },
+  "keywords": [
+    "wildfire",
+    "mediterranean",
+    "operational-intelligence",
+    "decision-support",
+    "fire-behavior"
+  ]
+}

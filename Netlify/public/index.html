@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYLVA - Thermodynamic-Fuel Continuum Framework for Wildfire Forecasting</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #0a1a0f;
+            --bg-card: #0f1f14;
+            --accent-green: #00ff88;
+            --accent-forest: #2d5f3f;
+            --text-main: #e8f5e9;
+            --text-dim: #81c784;
+            --footer-bg: #0d1710;
+            --glow: rgba(0, 255, 136, 0.3);
+            --critical: #ff3d00;
+            --high: #ff6f00;
+            --medium: #ffc107;
+            --low: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(45, 95, 63, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(76, 175, 80, 0.3) 0%, transparent 50%);
+            filter: blur(80px);
+            animation: bgPulse 10s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes bgPulse {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.15) rotate(8deg); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 26, 15, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 10px var(--glow)); }
+            100% { filter: drop-shadow(0 0 20px var(--glow)); }
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-green);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-green);
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a3d2a 0%, var(--bg-deep) 70%);
+            padding: 120px 20px 80px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(0, 255, 136, 0.15);
+            border: 1px solid var(--accent-green);
+            border-radius: 50px;
+            color: var(--accent-green);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            font-weight: 400;
+            margin-bottom: 1rem;
+            animation: slideUp 0.8s ease-out 0.4s both;
+            max-width: 900px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            animation: slideUp 0.8s ease-out 0.5s both;
+            opacity: 0.8;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-forest));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+            animation: slideUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Section */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-main), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-forest));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-green);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-green);
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .feature-card p {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* Parameters Section */
+        .parameters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .parameter-card {
+            background: var(--bg-card);
+            padding: 1.8rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-green);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .parameter-card:hover {
+            transform: translateX(10px);
+            border-left-color: var(--accent-forest);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+        }
+
+        .parameter-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: rgba(0, 255, 136, 0.1);
+        }
+
+        .parameter-card h4 {
+            font-size: 1.2rem;
+            color: var(--accent-green);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .parameter-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-green);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-forest));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Performance Table */
+        .performance-table {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 3rem 0;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .performance-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .performance-table th {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--accent-green);
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .performance-table td {
+            padding: 1.2rem 1.5rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            color: var(--text-dim);
+        }
+
+        .performance-table tr:hover {
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .improvement {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #1a3d2a 0%, var(--bg-deep) 100%);
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .cta-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-main), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-content p {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Scroll Reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .main-footer {
+            background: var(--footer-bg);
+            color: var(--text-dim);
+            padding: 3rem 2rem 1rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-column h4 {
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-column h4 i {
+            margin-right: 0.5rem;
+            color: var(--accent-green);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero h2 {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .features-grid,
+            .parameters-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+
+            .performance-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🌲 SYLVA</div>
+                <nav>
+                    <a href="#overview">Overview</a>
+                    <a href="#parameters">Parameters</a>
+                    <a href="#performance">Performance</a>
+                    <a href="#implementation">Implementation</a>
+                    <a href="https://gitlab.com/gitdeeper3/sylva" target="_blank">Repository</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-badge">🌲 Version 2.5.0 Production • February 2026 • Mediterranean Forest Systems</div>
+                <h1>SYLVA</h1>
+                <h2>A Thermodynamic-Fuel Continuum Framework for Wildfire Spread Rate and Fireline Intensity Estimation</h2>
+                <p class="subtitle">Operational Intelligence System for Mediterranean Wildfire Rapid Spread Forecasting</p>
+                <a href="https://gitlab.com/gitdeeper3/sylva" class="btn" target="_blank">
+                    <i class="fab fa-gitlab"></i> View on GitLab
+                </a>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section id="overview" class="section">
+            <div class="container">
+                <div class="section-header scroll-reveal">
+                    <h2 class="section-title">Closing the Operational Forecasting Gap</h2>
+                    <p class="section-subtitle">Addressing systematic underprediction bias in rapid fire spread forecasting through integrated multi-parameter analysis</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-fire"></i></div>
+                        <h3>Rapid Fire Spread Detection</h3>
+                        <p>74% of structure loss and 83% of suppression fatalities are attributable to rapid spread events (≥30 m/min sustained over ≥30 minutes). SYLVA achieves 81-87% accuracy in discriminating rapid spread from non-rapid periods.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-database"></i></div>
+                        <h3>Validated Framework</h3>
+                        <p>Retrospective validation using 213 Mediterranean wildfire episodes across Greece, Italy, Spain, Portugal, and France from 2,842 field samples and 2000-2024 fire seasons.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>Superior Performance</h3>
+                        <p>AUC = 0.88, Brier Skill Score = 0.36. Performance exceeds operational fire behavior guidance (BehavePlus, FARSITE) by 14-22% at 60-120 minute lead times.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-satellite"></i></div>
+                        <h3>Real-Time Integration</h3>
+                        <p>Integrates automatic weather stations, Sentinel-2 MSI imagery (NDWI inversion), Canadian FFDR System, digital elevation models, and field fuel inventory data.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-flask"></i></div>
+                        <h3>Thermodynamic Foundation</h3>
+                        <p>Treats Mediterranean fuel complexes as coupled thermodynamic-moisture continua where fire spread potential is governed by available heat flux to heat sink capacity ratio.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-globe-europe"></i></div>
+                        <h3>Mediterranean Calibration</h3>
+                        <p>Specifically calibrated for Pinus halepensis, Quercus ilex, Mediterranean maquis, and dry grasslands with regional fuel structure and drought climatology.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parameters Section -->
+        <section id="parameters" class="section" style="background: rgba(26, 61, 42, 0.3);">
+            <div class="container">
+                <div class="section-header scroll-reveal">
+                    <h2 class="section-title">The 9 Essential Parameters</h2>
+                    <p class="section-subtitle">Integrated framework synthesizing fuel moisture dynamics, fuel structure, meteorology, and terrain for operational rapid spread assessment</p>
+                </div>
+
+                <div class="parameters-grid">
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">1</span>
+                        <h4><i class="fas fa-seedling"></i> Live Fuel Moisture</h4>
+                        <p>Sentinel-2 NDWI inversion at 20m resolution, 5-day revisit. Critical for Mediterranean shrubland fire behavior during summer drought stress.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">2</span>
+                        <h4><i class="fas fa-tint"></i> Dead Fuel Moisture (1-hr)</h4>
+                        <p>Fine Fuel Moisture Code (FFMC) from automatic weather stations. Primary driver of surface fire ignition and initial spread in <15% moisture ranges.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">3</span>
+                        <h4><i class="fas fa-tint"></i> Dead Fuel Moisture (10-hr)</h4>
+                        <p>Duff Moisture Code (DMC) representing loosely packed organic layers. Influences sustained fire intensity and burn-through depth.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">4</span>
+                        <h4><i class="fas fa-tint"></i> Dead Fuel Moisture (100-hr)</h4>
+                        <p>Drought Code (DC) representing deep organic layers. Long-term drought indicator affecting fire season severity and containment difficulty.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">5</span>
+                        <h4><i class="fas fa-tree"></i> Canopy Bulk Density</h4>
+                        <p>Landsat-derived with LiDAR validation (0.08-0.45 kg/m³). Critical threshold >0.20 kg/m³ for active crown fire spread in Mediterranean forests.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">6</span>
+                        <h4><i class="fas fa-weight"></i> Surface Fuel Load</h4>
+                        <p>Field inventory and photo series (15-65 tons/ha). Combined with fuel bed depth determines available heat release and flame length.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">7</span>
+                        <h4><i class="fas fa-layer-group"></i> Fuel Bed Depth</h4>
+                        <p>Field measurements (0.3-4.0m). Tall shrub fuels (maquis 1.5-4.0m) require modified Rothermel extrapolation beyond laboratory fuel bed calibration.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">8</span>
+                        <h4><i class="fas fa-wind"></i> Terrain-Adjusted Wind Vector</h4>
+                        <p>WindNinja/WindWizard algorithms from AWS networks. Topographic acceleration, channeling effects, and aspect-driven circulations in complex terrain.</p>
+                    </div>
+
+                    <div class="parameter-card scroll-reveal">
+                        <span class="parameter-number">9</span>
+                        <h4><i class="fas fa-thermometer-half"></i> Vapor Pressure Deficit</h4>
+                        <p>Derived from temperature and relative humidity. Drives live fuel moisture loss rates (2-5% per day) during heat wave episodes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance" class="section">
+            <div class="container">
+                <div class="section-header scroll-reveal">
+                    <h2 class="section-title">Validation Results</h2>
+                    <p class="section-subtitle">213 Mediterranean wildfire episodes demonstrating operational forecast skill improvements</p>
+                </div>
+
+                <div class="stats-grid scroll-reveal">
+                    <div class="stat-card">
+                        <div class="stat-number">81-87%</div>
+                        <div class="stat-label">Overall Accuracy</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">0.88</div>
+                        <div class="stat-label">AUC Score</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">83%</div>
+                        <div class="stat-label">Detection Rate</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">16%</div>
+                        <div class="stat-label">False Alarm Rate</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">60-120</div>
+                        <div class="stat-label">Forecast Lead (min)</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number">213</div>
+                        <div class="stat-label">Fire Episodes</div>
+                    </div>
+                </div>
+
+                <div class="performance-table scroll-reveal">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fuel Type</th>
+                                <th>Fire Cases</th>
+                                <th>SYLVA POD</th>
+                                <th>Operational POD</th>
+                                <th>Improvement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pinus halepensis</td>
+                                <td>68</td>
+                                <td>0.86</td>
+                                <td>0.71</td>
+                                <td class="improvement">+15%</td>
+                            </tr>
+                            <tr>
+                                <td>Quercus ilex</td>
+                                <td>42</td>
+                                <td>0.81</td>
+                                <td>0.67</td>
+                                <td class="improvement">+14%</td>
+                            </tr>
+                            <tr>
+                                <td>Mediterranean maquis</td>
+                                <td>53</td>
+                                <td>0.84</td>
+                                <td>0.69</td>
+                                <td class="improvement">+15%</td>
+                            </tr>
+                            <tr>
+                                <td>Dry grassland</td>
+                                <td>24</td>
+                                <td>0.79</td>
+                                <td>0.57</td>
+                                <td class="improvement">+22%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Section -->
+        <section id="implementation" class="section" style="background: rgba(26, 61, 42, 0.2);">
+            <div class="container">
+                <div class="section-header scroll-reveal">
+                    <h2 class="section-title">Operational Implementation</h2>
+                    <p class="section-subtitle">Integration requirements for civil protection agencies and forest fire management centers</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-broadcast-tower"></i></div>
+                        <h3>Automatic Weather Stations</h3>
+                        <p>10-minute wind speed, air temperature, relative humidity observations. Network density requirements: 1 per 1,000-5,000 km² for operational fuel moisture estimation.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-satellite-dish"></i></div>
+                        <h3>Sentinel-2 MSI Imagery</h3>
+                        <p>20m resolution NDWI inversion for live fuel moisture with 5-day revisit interval. Critical for capturing rapid drying during heat waves (2-5% per day moisture loss).</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-fire-alt"></i></div>
+                        <h3>Canadian FFDR System</h3>
+                        <p>Fine Fuel Moisture Code (FFMC), Duff Moisture Code (DMC), and Drought Code (DC) for dead fuel moisture timelag dynamics and seasonal drought accumulation.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-mountain"></i></div>
+                        <h3>Digital Elevation Models</h3>
+                        <p>Aspect, slope, and topographic wind adjustment algorithms (WindNinja/WindWizard) for terrain-induced acceleration and channeling effects at 20-80m resolution.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-ruler"></i></div>
+                        <h3>Field Fuel Inventory</h3>
+                        <p>Fuel load transects, canopy bulk density measurements, canopy base height, and fuel bed depth sampling. Regional calibration campaigns for Mediterranean fuel types.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal">
+                        <div class="feature-icon"><i class="fas fa-code"></i></div>
+                        <h3>Open Source Framework</h3>
+                        <p>Complete implementation available under CC-BY license. Python-based operational pipeline with real-time data stream integration and probabilistic forecast output.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Access the Framework</h2>
+                    <p>Complete SYLVA protocol documentation, validation datasets, and operational implementation code available under Creative Commons Attribution 4.0</p>
+                    <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://gitlab.com/gitdeeper3/sylva" target="_blank" class="btn">
+                            <i class="fab fa-gitlab"></i> GitLab Repository
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+     <!-- REPLICATED FOOTER STYLES -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4><i class="fas fa-project-diagram"></i> Project</h4>
+                <ul class="footer-links">
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva" target="_blank">GitLab Repository</a></li>
+                    <li><a href="https://pypi.org/project/sylva-fire/2.5.5/" target="_blank">PyPI Package</a></li>
+                    <li><a href="https://codeberg.org/gitdeeper2/sylva/" target="_blank">Codeberg Mirror</a></li>
+                    <li><a href="https://bitbucket.org/gitdeeper3/sylva/" target="_blank">Bitbucket Mirror</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-book"></i> Documentation</h4>
+                <ul class="footer-links">
+                    <li><a href="/index.html">Home Page</a></li>
+                    <li><a href="/dashboard.html">Dashboard</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/vortex/-/wikis/API-Reference" target="_blank">API Reference</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva/-/wikis/Architecture" target="_blank">Architecture</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/vortex/-/wikis/Supabase-Deployment" target="_blank">Supabase Deployment</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-users"></i> Community</h4>
+                <ul class="footer-links">
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva/-/wikis/Development-Guide" target="_blank">Contributing</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva/-/issues" target="_blank">Issue Tracker</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/vortex/-/wikis/FAQ" target="_blank">FAQ</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva/-/wikis/Troubleshooting" target="_blank">Troubleshooting</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">
+                Copyright © SYLVA 🌲 - 2026 | All rights reserved
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Scroll reveal animation
+        const scrollReveal = () => {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', scrollReveal);
+        window.addEventListener('load', scrollReveal);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

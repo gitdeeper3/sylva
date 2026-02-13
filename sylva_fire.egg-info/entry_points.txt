@@ -1,0 +1,4 @@
+[console_scripts]
+sylva-download = sylva.scripts.download_sentinel2:main
+sylva-forecast = sylva.scripts.cli:main
+sylva-validate = sylva.scripts.validation:main

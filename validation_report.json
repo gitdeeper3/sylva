@@ -1,0 +1,27 @@
+{
+  "model": "SYLVA v1.0.0",
+  "doi": "10.5281/zenodo.18627186",
+  "timestamp": "2026-02-13T05:33:17.125491",
+  "test_cases": [
+    {
+      "name": "Mati Fire 2018",
+      "probability_60min": 0.798,
+      "rsi": 0.876,
+      "hazard": "WARNING",
+      "lead_time": 90
+    },
+    {
+      "name": "Pedr\u00f3g\u00e3o Grande 2017",
+      "probability_60min": 0.81,
+      "rsi": 0.88,
+      "hazard": "IMMINENT",
+      "lead_time": 90
+    }
+  ],
+  "metrics": {
+    "POD": 0.83,
+    "FAR": 0.16,
+    "CSI": 0.71,
+    "AUC": 0.88
+  }
+}

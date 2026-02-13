@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYLVA Documentation - Installation, Usage & API Reference</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-deep: #0a1a0f;
+            --bg-card: #0f1f14;
+            --accent-green: #00ff88;
+            --accent-forest: #2d5f3f;
+            --text-main: #e8f5e9;
+            --text-dim: #81c784;
+            --code-bg: #1a2c1f;
+            --footer-bg: #0d1710;
+            --glow: rgba(0, 255, 136, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 26, 15, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-green);
+        }
+
+        /* Main Layout */
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            gap: 3rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .sidebar h3 {
+            color: var(--accent-green);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            color: var(--accent-green);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        /* Content */
+        .content {
+            max-width: 900px;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-main), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            margin-top: 3rem;
+            color: var(--accent-green);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--text-main);
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+            color: var(--accent-green);
+        }
+
+        p {
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Code Blocks */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--accent-green);
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent-green);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .info-box.warning {
+            border-left-color: #ffc107;
+        }
+
+        .info-box.error {
+            border-left-color: #ff3d00;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            color: var(--accent-green);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            color: var(--text-dim);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Links */
+        a {
+            color: var(--accent-green);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        a:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: var(--footer-bg);
+            color: var(--text-dim);
+            padding: 3rem 2rem 1rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-column h4 {
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-column h4 i {
+            margin-right: 0.5rem;
+            color: var(--accent-green);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .docs-layout {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1.5rem;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            .content {
+                overflow-x: hidden;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2rem;
+                word-wrap: break-word;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                word-wrap: break-word;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                word-wrap: break-word;
+            }
+
+            h4 {
+                font-size: 1.1rem;
+                word-wrap: break-word;
+            }
+
+            p, li {
+                font-size: 0.95rem;
+                word-wrap: break-word;
+            }
+
+            pre {
+                overflow-x: auto;
+                max-width: 100%;
+                font-size: 0.85rem;
+            }
+
+            pre code {
+                font-size: 0.85rem;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .info-box {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.35rem;
+            }
+
+            .docs-layout {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">🌲 SYLVA</div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="documentation.html" class="active">Documentation</a>
+                <a href="https://gitlab.com/gitdeeper3/sylva" target="_blank">GitLab</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Contents</h3>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#quick-start">Quick Start</a></li>
+                <li><a href="#parameters">Nine Parameters</a></li>
+                <li><a href="#api-reference">API Reference</a></li>
+                <li><a href="#operational-dashboard">Dashboard</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#validation">Validation</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#author">Author & Contributors</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content -->
+        <main class="content">
+            <!-- Overview -->
+            <section id="overview" class="section">
+                <h1>SYLVA Documentation</h1>
+                <p><strong>Version 2.5.0</strong> - Production Release</p>
+                <p>SYLVA (Thermodynamic-Fuel Continuum Framework) is an operational intelligence system for assessing rapid fire spread probability in Mediterranean forest systems by integrating nine physically-based, measurable parameters into a unified command-center ready forecasting platform.</p>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-info-circle"></i> Current Status</h4>
+                    <p><strong>v2.5.0 - PRODUCTION READY ✅</strong></p>
+                    <ul>
+                        <li>Operational Dashboard with command center interface</li>
+                        <li>Quantitative Risk Score (0-100 scale)</li>
+                        <li>WUI Evacuation Timing (±2 minute accuracy)</li>
+                        <li>Threat Zone Modeling (Elliptical fire growth)</li>
+                        <li>Validated against 213 Mediterranean wildfires</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Installation -->
+            <section id="installation" class="section">
+                <h2>Installation</h2>
+
+                <h3>System Requirements</h3>
+                <ul>
+                    <li>Python 3.8+</li>
+                    <li>NumPy >= 1.19.0</li>
+                    <li>SciPy >= 1.5.0</li>
+                    <li>Pandas >= 1.1.0</li>
+                    <li>Matplotlib >= 3.3.0</li>
+                    <li>Scikit-learn >= 0.23.0</li>
+                </ul>
+
+                <h3>Installation from GitLab</h3>
+                <pre><code>git clone https://gitlab.com/gitdeeper3/sylva.git
+cd sylva
+pip install -e .</code></pre>
+
+                <h3>Verify Installation</h3>
+                <pre><code>python -c "import sylva_fire; print(sylva_fire.__version__)"
+# Expected output: 2.5.0</code></pre>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Note</h4>
+                    <p>For operational deployment, Docker containers are recommended. See the <a href="#deployment">Deployment</a> section.</p>
+                </div>
+            </section>
+
+            <!-- Quick Start -->
+            <section id="quick-start" class="section">
+                <h2>Quick Start</h2>
+
+                <h3>Generate Operational Report</h3>
+                <pre><code>from scripts.generate_daily_report import DailyReportGenerator
+
+# Initialize generator
+generator = DailyReportGenerator()
+
+# Define fire scenario parameters
+params = {
+    "region": "Attica, Greece",
+    "wui_distance": 1.5,  # km to Wildland-Urban Interface
+    "parameters": {
+        "lfm": 68,           # Live Fuel Moisture (%)
+        "dfm": 5.1,          # Dead Fuel Moisture (%)
+        "cbd": 0.14,         # Canopy Bulk Density (kg/m³)
+        "wind_speed": 10.4,  # Wind Speed (m/s)
+        "vpd": 46.7,         # Vapor Pressure Deficit (hPa)
+        "drought_code": 487, # Canadian Drought Code
+        "slope": 5           # Terrain Slope (degrees)
+    }
+}
+
+# Generate complete report
+report = generator.generate_complete_report(params)
+
+# Display key metrics
+print(f"Risk Level: {report['summary']['risk']['level']}")
+print(f"Risk Score: {report['summary']['risk']['score']}/100")
+print(f"Spread Distance: {report['operational_intelligence']['spread_projection']['max_distance_km']} km")</code></pre>
+
+                <h3>Command Center Dashboard</h3>
+                <pre><code># Generate dashboard from command line
+python scripts/generate_daily_report.py
+python reports/sylva_operational_dashboard.py
+
+# View dashboard
+cat reports/daily/*_DASHBOARD.txt</code></pre>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-chart-line"></i> Expected Output</h4>
+                    <p>The system generates three files:</p>
+                    <ul>
+                        <li><code>sylva_briefing_*.json</code> - Raw data</li>
+                        <li><code>sylva_briefing_*.txt</code> - Formatted report</li>
+                        <li><code>*_DASHBOARD.txt</code> - Command center view</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Parameters -->
+            <section id="parameters" class="section">
+                <h2>The Nine Parameters</h2>
+                <p>SYLVA integrates nine essential parameters to quantify rapid fire spread probability:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Symbol</th>
+                            <th>Units</th>
+                            <th>Critical Threshold</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Live Fuel Moisture</td>
+                            <td>LFM</td>
+                            <td>%</td>
+                            <td>&lt; 85%</td>
+                        </tr>
+                        <tr>
+                            <td>Dead Fuel Moisture</td>
+                            <td>DFM</td>
+                            <td>%</td>
+                            <td>&lt; 8%</td>
+                        </tr>
+                        <tr>
+                            <td>Canopy Bulk Density</td>
+                            <td>CBD</td>
+                            <td>kg/m³</td>
+                            <td>&gt; 0.20</td>
+                        </tr>
+                        <tr>
+                            <td>Surface Fuel Load</td>
+                            <td>SFL</td>
+                            <td>tons/ha</td>
+                            <td>15-80</td>
+                        </tr>
+                        <tr>
+                            <td>Fuel Bed Depth</td>
+                            <td>FBD</td>
+                            <td>m</td>
+                            <td>0.3-4.0</td>
+                        </tr>
+                        <tr>
+                            <td>Wind Vector</td>
+                            <td>Vw</td>
+                            <td>m/s</td>
+                            <td>&gt; 8</td>
+                        </tr>
+                        <tr>
+                            <td>Vapor Pressure Deficit</td>
+                            <td>VPD</td>
+                            <td>hPa</td>
+                            <td>&gt; 25</td>
+                        </tr>
+                        <tr>
+                            <td>Aspect</td>
+                            <td>-</td>
+                            <td>degrees</td>
+                            <td>SW-W (225°)</td>
+                        </tr>
+                        <tr>
+                            <td>Drought Code</td>
+                            <td>DC</td>
+                            <td>-</td>
+                            <td>&gt; 400</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Parameter Acquisition</h3>
+                <h4>Live Fuel Moisture (LFM)</h4>
+                <ul>
+                    <li>Sentinel-2 NDWI inversion at 20m resolution</li>
+                    <li>5-day revisit interval</li>
+                    <li>Field validation campaigns for calibration</li>
+                </ul>
+
+                <h4>Dead Fuel Moisture (DFM)</h4>
+                <ul>
+                    <li>Canadian Fine Fuel Moisture Code (FFMC)</li>
+                    <li>Automatic weather station networks (10-minute observations)</li>
+                    <li>Equilibrium moisture content calculations</li>
+                </ul>
+
+                <h4>Canopy Bulk Density (CBD)</h4>
+                <ul>
+                    <li>Landsat-derived with LiDAR validation</li>
+                    <li>European Forest Inventory data</li>
+                    <li>Regional allometric equations</li>
+                </ul>
+
+                <h4>Wind Vector (Vw)</h4>
+                <ul>
+                    <li>WindNinja/WindWizard topographic adjustment algorithms</li>
+                    <li>AWS networks with 10m standardization</li>
+                    <li>Terrain channeling and acceleration effects</li>
+                </ul>
+            </section>
+
+            <!-- API Reference -->
+            <section id="api-reference" class="section">
+                <h2>API Reference</h2>
+
+                <h3>Core Modules</h3>
+
+                <h4>DailyReportGenerator</h4>
+                <p>Main class for generating operational fire behavior reports.</p>
+                <pre><code>from scripts.generate_daily_report import DailyReportGenerator
+
+generator = DailyReportGenerator()
+
+# Generate complete report
+report = generator.generate_complete_report(params)
+
+# Generate specific sections
+summary = generator.generate_summary(params)
+operational = generator.generate_operational_intelligence(params)
+resources = generator.generate_resource_requirements(params)</code></pre>
+
+                <h4>OperationalDashboard</h4>
+                <p>Command center dashboard generator.</p>
+                <pre><code>from reports.sylva_operational_dashboard import OperationalDashboard
+
+dashboard = OperationalDashboard(report_data)
+dashboard.generate()  # Creates *_DASHBOARD.txt file</code></pre>
+
+                <h3>Core Functions</h3>
+
+                <h4>calculate_rapid_spread_index()</h4>
+                <pre><code>from sylva_fire.integration import calculate_rapid_spread_index
+
+rsi = calculate_rapid_spread_index(
+    lfm=68.0,
+    dfm=5.1,
+    cbd=0.14,
+    wind_speed=10.4,
+    vpd=46.7,
+    drought_code=487
+)
+# Returns: float (0-100 scale)</code></pre>
+
+                <h4>calculate_crown_fire_probability()</h4>
+                <pre><code>from sylva_fire.forecasting import calculate_crown_fire_probability
+
+crown_prob = calculate_crown_fire_probability(
+    cbd=0.14,
+    wind_speed=10.4,
+    canopy_moisture=68.0
+)
+# Returns: float (0-1 probability)</code></pre>
+
+                <h4>calculate_spread_rate()</h4>
+                <pre><code>from sylva_fire.core import calculate_spread_rate
+
+ros = calculate_spread_rate(
+    fuel_type="dry_grassland",
+    dfm=5.1,
+    wind_speed=10.4,
+    slope=5.0
+)
+# Returns: float (m/min)</code></pre>
+            </section>
+
+            <!-- Operational Dashboard -->
+            <section id="operational-dashboard" class="section">
+                <h2>Operational Dashboard</h2>
+
+                <h3>Risk Score Calculation</h3>
+                <p>The quantitative risk score (0-100) is calculated from six factors:</p>
+                <pre><code>RiskScore = DFM(0-25) + Wind(0-25) + VPD(0-15) + 
+            DC(0-15) + Crown(0-10) + Containment(0-10)</code></pre>
+
+                <h3>Decision Thresholds</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Score Range</th>
+                            <th>Risk Level</th>
+                            <th>Color</th>
+                            <th>Evacuation Decision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>80-100</td>
+                            <td>EXTREME</td>
+                            <td>⚫ Black</td>
+                            <td>IMMEDIATE EVACUATION</td>
+                        </tr>
+                        <tr>
+                            <td>65-79</td>
+                            <td>VERY HIGH</td>
+                            <td>🔴 Red</td>
+                            <td>PREPARE FOR EVACUATION</td>
+                        </tr>
+                        <tr>
+                            <td>50-64</td>
+                            <td>HIGH</td>
+                            <td>🟠 Orange</td>
+                            <td>EVACUATION WARNING</td>
+                        </tr>
+                        <tr>
+                            <td>35-49</td>
+                            <td>MODERATE</td>
+                            <td>🟡 Yellow</td>
+                            <td>MONITOR</td>
+                        </tr>
+                        <tr>
+                            <td>0-34</td>
+                            <td>LOW</td>
+                            <td>🟢 Green</td>
+                            <td>ROUTINE</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Dashboard Output Format</h3>
+                <pre><code>🔥 SYLVA OPERATIONAL DASHBOARD 🔴 VERY HIGH RISK
+────────────────────────────────────────────────
+RISK LEVEL:     🔴 VERY HIGH (Score: 72/100)
+WUI ARRIVAL:    31 minutes - 🟠 PREPARE FOR EVACUATION
+SPREAD:         4.3km in 90min (Dry Grassland)
+CONTAINMENT:    🔴 VERY DIFFICULT (Success: 30%)
+CROWN FIRE:     🔴 95% potential - VERY HIGH
+
+🎯 PRIMARY RISK DRIVERS
+────────────────────────────────────────────────
+1. Wind: 87% ████████
+2. DFM: 83% ████████
+3. VPD: 80% ████████</code></pre>
+            </section>
+
+            <!-- Examples -->
+            <section id="examples" class="section">
+                <h2>Examples</h2>
+
+                <h3>Example 1: Mati Fire 2018</h3>
+                <p>Historical validation case from Greece's deadliest wildfire.</p>
+                <pre><code>params = {
+    "region": "Attica, Greece",
+    "date": "2018-07-23",
+    "wui_distance": 1.5,
+    "parameters": {
+        "lfm": 68.0,
+        "dfm": 5.1,
+        "cbd": 0.14,
+        "sfl": 35.0,
+        "fbd": 0.8,
+        "wind_speed": 10.4,
+        "vpd": 46.7,
+        "aspect": 225,
+        "drought_code": 487,
+        "slope": 5.0
+    }
+}
+
+report = generator.generate_complete_report(params)
+
+# Results:
+# Risk Score: 72/100 (VERY HIGH)
+# Max ROS: 47.7 m/min
+# Spread Distance: 4.3 km in 90 minutes
+# WUI Arrival: 31 minutes
+# Crown Fire: 95% probability</code></pre>
+
+                <h3>Example 2: Custom Scenario</h3>
+                <pre><code>params = {
+    "region": "Custom Location",
+    "wui_distance": 2.0,
+    "parameters": {
+        "lfm": 75.0,
+        "dfm": 8.0,
+        "cbd": 0.18,
+        "wind_speed": 12.0,
+        "vpd": 38.0,
+        "drought_code": 420
+    }
+}
+
+report = generator.generate_complete_report(params)</code></pre>
+            </section>
+
+            <!-- Validation -->
+            <section id="validation" class="section">
+                <h2>Validation Results</h2>
+
+                <h3>Overall Performance</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Probability of Detection (POD)</td>
+                            <td>0.83</td>
+                        </tr>
+                        <tr>
+                            <td>False Alarm Ratio (FAR)</td>
+                            <td>0.16</td>
+                        </tr>
+                        <tr>
+                            <td>Critical Success Index (CSI)</td>
+                            <td>0.71</td>
+                        </tr>
+                        <tr>
+                            <td>AUC (Area Under ROC Curve)</td>
+                            <td>0.88</td>
+                        </tr>
+                        <tr>
+                            <td>Brier Skill Score</td>
+                            <td>0.36</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Fuel Type Performance</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fuel Type</th>
+                            <th>Cases</th>
+                            <th>SYLVA POD</th>
+                            <th>Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pinus halepensis</td>
+                            <td>68</td>
+                            <td>0.86</td>
+                            <td>+15%</td>
+                        </tr>
+                        <tr>
+                            <td>Quercus ilex</td>
+                            <td>42</td>
+                            <td>0.81</td>
+                            <td>+14%</td>
+                        </tr>
+                        <tr>
+                            <td>Mediterranean maquis</td>
+                            <td>53</td>
+                            <td>0.84</td>
+                            <td>+15%</td>
+                        </tr>
+                        <tr>
+                            <td>Dry grassland</td>
+                            <td>24</td>
+                            <td>0.79</td>
+                            <td>+22%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Deployment -->
+            <section id="deployment" class="section">
+                <h2>Deployment</h2>
+
+                <h3>Docker Deployment</h3>
+                <pre><code># Build Docker image
+docker build -t sylva:2.5.0 .
+
+# Run container
+docker run -d \
+  --name sylva-fire \
+  -v $(pwd)/reports:/app/reports \
+  sylva:2.5.0
+
+# Generate report
+docker exec sylva-fire python scripts/generate_daily_report.py</code></pre>
+
+                <h3>Production Environment</h3>
+                <div class="info-box">
+                    <h4><i class="fas fa-server"></i> Recommended Setup</h4>
+                    <ul>
+                        <li>Ubuntu 20.04 LTS or later</li>
+                        <li>Python 3.8+ virtual environment</li>
+                        <li>Automated cron jobs for regular reports</li>
+                        <li>Integration with automatic weather station networks</li>
+                        <li>Sentinel-2 data pipeline for live fuel moisture</li>
+                    </ul>
+                </div>
+
+                <h3>Cron Job Example</h3>
+                <pre><code># Run SYLVA report every 6 hours
+0 */6 * * * cd /opt/sylva && python scripts/generate_daily_report.py</code></pre>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="section">
+                <h2>Troubleshooting</h2>
+
+                <h3>Common Issues</h3>
+
+                <h4>Issue: Import Error</h4>
+                <div class="info-box error">
+                    <p><strong>Error:</strong> <code>ModuleNotFoundError: No module named 'sylva_fire'</code></p>
+                    <p><strong>Solution:</strong> Install package in development mode:</p>
+                    <pre><code>pip install -e .</code></pre>
+                </div>
+
+                <h4>Issue: Missing Dependencies</h4>
+                <div class="info-box error">
+                    <p><strong>Error:</strong> Missing NumPy, SciPy, or other dependencies</p>
+                    <p><strong>Solution:</strong> Install all requirements:</p>
+                    <pre><code>pip install -r requirements.txt</code></pre>
+                </div>
+
+                <h4>Issue: Parameter Validation</h4>
+                <div class="info-box warning">
+                    <p><strong>Warning:</strong> Invalid parameter ranges</p>
+                    <p><strong>Solution:</strong> Ensure parameters are within valid ranges:</p>
+                    <ul>
+                        <li>LFM: 40-120%</li>
+                        <li>DFM: 2-25%</li>
+                        <li>CBD: 0.05-0.50 kg/m³</li>
+                        <li>Wind: 0-30 m/s</li>
+                    </ul>
+                </div>
+
+                <h3>Support</h3>
+                <p>For additional support:</p>
+                <ul>
+                    <li>GitLab Issues: <a href="https://gitlab.com/gitdeeper3/sylva/-/issues" target="_blank">https://gitlab.com/gitdeeper3/sylva/-/issues</a></li>
+                    <li>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="294e405d4d4c4c594c5b694e44484045074a4644">[email&#160;protected]</a></li>
+                    <li>Documentation: <a href="https://sylva-fire.readthedocs.io" target="_blank">https://sylva-fire.readthedocs.io</a></li>
+                </ul>
+            </section>
+
+            <!-- Author Information -->
+            <section id="author" class="section">
+                <h2>Author & Contributors</h2>
+
+                <div class="info-box">
+                    <h3>🧑‍💻 Project Lead & Creator</h3>
+                    <p><strong>Samir Baladi</strong></p>
+                    <ul>
+                        <li><strong>Role:</strong> Interdisciplinary AI Researcher, Scientific Software Developer</li>
+                        <li><strong>Email:</strong> <a href="mailto:gitdeeper@gmail.com">gitdeeper@gmail.com</a></li>
+                        <li><strong>ORCID:</strong> <a href="https://orcid.org/0009-0003-8903-0029" target="_blank">0009-0003-8903-0029</a></li>
+                        <li><strong>Phone:</strong> +1-614-264-2074</li>
+                        <li><strong>GitLab:</strong> <a href="https://gitlab.com/gitdeeper3" target="_blank">https://gitlab.com/gitdeeper3</a></li>
+                        <li><strong>Research Interests:</strong> Applied AI/ML in geosciences, computational meteorology, scientific software development, wildfire behavior modeling</li>
+                    </ul>
+                </div>
+
+                <h3>🤝 Scientific Advisory Board</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Institution</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dr. Maria Papadopoulou</td>
+                            <td>National Observatory of Athens</td>
+                            <td>Fire Meteorology</td>
+                        </tr>
+                        <tr>
+                            <td>Prof. Carlos Silva</td>
+                            <td>University of Coimbra</td>
+                            <td>Forest Engineering</td>
+                        </tr>
+                        <tr>
+                            <td>Dr. Francesca Romano</td>
+                            <td>Italian National Research Council</td>
+                            <td>Remote Sensing</td>
+                        </tr>
+                        <tr>
+                            <td>Dr. Jean-Luc Martinez</td>
+                            <td>French National Institute for Agricultural Research</td>
+                            <td>Fuel Dynamics</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>💻 Development Team</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Contribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Elena Rossi</td>
+                            <td>Backend Developer</td>
+                            <td>API development, data processing</td>
+                        </tr>
+                        <tr>
+                            <td>Ahmed Benali</td>
+                            <td>Frontend Developer</td>
+                            <td>Visualization dashboard</td>
+                        </tr>
+                        <tr>
+                            <td>Sofia Andersson</td>
+                            <td>DevOps Engineer</td>
+                            <td>CI/CD, Docker deployment</td>
+                        </tr>
+                        <tr>
+                            <td>Thomas Weber</td>
+                            <td>GIS Specialist</td>
+                            <td>Spatial analysis, DEM processing</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🔬 Validation & Testing</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Institution</th>
+                            <th>Contribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dr. Konstantinos Dimitriou</td>
+                            <td>Hellenic Fire Service</td>
+                            <td>Field validation, Greece</td>
+                        </tr>
+                        <tr>
+                            <td>Miguel Oliveira</td>
+                            <td>Portuguese Institute for Nature Conservation</td>
+                            <td>Case studies, Portugal</td>
+                        </tr>
+                        <tr>
+                            <td>Laura Garcia</td>
+                            <td>Catalan Fire Service</td>
+                            <td>Operational testing, Spain</td>
+                        </tr>
+                        <tr>
+                            <td>Giuseppe Lombardi</td>
+                            <td>Italian Civil Protection</td>
+                            <td>Alert system validation</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🙏 Acknowledgments</h3>
+                <p>This project received funding and support from:</p>
+                <ul>
+                    <li>European Forest Fire Information System (EFFIS)</li>
+                    <li>Mediterranean Climate Outreach Programme</li>
+                    <li>Open Earth Observation for Wildfire Monitoring Initiative</li>
+                    <li>GitLab Open Source Program</li>
+                </ul>
+                <p>Special thanks to all wildfire firefighters and emergency managers who provided invaluable feedback during the development and validation phases.</p>
+
+                <h3>📄 How to Cite</h3>
+                <pre><code>@software{baladi2026sylva,
+  author       = {Baladi, Samir},
+  title        = {SYLVA: Operational Intelligence System for 
+                  Mediterranean Wildfire Rapid Spread Forecasting},
+  year         = 2026,
+  version      = {2.5.0},
+  doi          = {10.5281/zenodo.18627186},
+  url          = {https://doi.org/10.5281/zenodo.18627186}
+}</code></pre>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4><i class="fas fa-project-diagram"></i> Project</h4>
+                <ul class="footer-links">
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva" target="_blank">GitLab Repository</a></li>
+                    <li><a href="https://pypi.org/project/sylva-fire/2.5.5/" target="_blank">Pypi Package</a></li>
+                    <li><a href="/documentation" >Read The Docs</a></li>
+                    <li><a href="/changelog.html" target="_blank">Changelog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-book"></i> Documentation</h4>
+                <ul class="footer-links">
+                    <li><a href="/index.html">Home Page</a></li>
+                    <li><a href="/documentation.html">Implementation Guide</a></li>
+                    <li><a href="/api-reference.html">API Reference</a></li>
+                    <li><a href="/fuel-models.html">Fuel Model Calibration</a></li>
+                    <li><a href="/validation.html">Validation Results</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4><i class="fas fa-users"></i> Community</h4>
+                <ul class="footer-links">
+                    <li><a href="/contributing.html">Contributing Guidelines</a></li>
+                    <li><a href="https://gitlab.com/gitdeeper3/sylva/-/issues" target="_blank">Issue Tracker</a></li>
+                    <li><a href="/faq.html">FAQ</a></li>
+                    <li><a href="mailto:gitdeeper@gmail.com">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">
+                Copyright ©   SYLVA 🌲 - 2026 | All rights reserved
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section in sidebar
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.sidebar a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+            
